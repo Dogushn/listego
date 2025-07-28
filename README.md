@@ -1,188 +1,149 @@
-# ListeGo - Smart Shopping Lists
+# Flutter Projesi
+![İstinye Üniversitesi](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPDx-F-jg4WHeC9IQEykC41ZIMYOTQNJo5RQ&s)
 
-ListeGo is a modern, feature-rich shopping list mobile app built with Flutter. It provides an intuitive interface for managing shopping lists with local notifications, data persistence, and a beautiful Material Design 3 UI.
 
-## Features
+## Ekibimiz
+- **Danışman:** Keyvan Arasteh [Github](https://github.com/keyvanarasteh)
+- **Takım Lideri** Doğukan Şahin [Github](https://github.com/Dogushn)
 
-### 🛒 Core Features
-- **Create and manage shopping lists** - Organize your shopping with multiple lists
-- **Add items with details** - Include quantity, notes, and reminders for each item
-- **Mark items as completed** - Track your shopping progress
-- **Archive completed lists** - Keep your active lists clean and organized
-- **Duplicate lists** - Reuse your favorite shopping lists
 
-### 🔔 Smart Notifications
-- **Item reminders** - Set reminders for specific items
-- **List completion notifications** - Get notified when you complete a list
-- **Customizable notification settings** - Control when and how you receive notifications
+# ListeGo - Akıllı Alışveriş Listeleri
 
-### 🎨 Modern UI/UX
-- **Material Design 3** - Beautiful, modern interface following Google's design guidelines
-- **Dark/Light theme support** - Choose your preferred theme or follow system settings
-- **Responsive design** - Works seamlessly across different screen sizes
-- **Smooth animations** - Delightful user experience with fluid transitions
+ListeGo, Flutter ile geliştirilmiş modern ve zengin özelliklere sahip bir alışveriş listesi mobil uygulamasıdır. Yerel bildirimler, veri saklama ve şık bir Material Design 3 arayüzü ile alışveriş listelerinizi kolayca yönetmenizi sağlar.
 
-### 💾 Data Management
-- **Local data persistence** - Your data stays on your device using Hive database
-- **Offline functionality** - Works without internet connection
-- **Data export/import** - Backup and restore your shopping lists (coming soon)
+## Özellikler
 
-## Screens
+### 🛒 Temel Özellikler
+- **Liste oluşturma ve yönetme** - Alışverişinizi birden fazla listeyle düzenleyin.
+- **Detaylı ürün ekleme** - Her ürün için miktar, not ve hatırlatıcı ekleyin.
+- **Alınanları işaretleme** - Alışverişinizdeki ilerlemenizi takip edin.
+- **Tamamlanan listeleri arşivleme** - Aktif listelerinizi temiz ve düzenli tutun.
+- **Liste kopyalama** - Sık kullandığınız alışveriş listelerini kolayca yeniden oluşturun.
 
-### 1. Splash Screen
-- Beautiful animated introduction to the app
-- Initializes services and loads data
-- Smooth transition to the main app
+### 🔔 Akıllı Bildirimler
+- **Ürün hatırlatıcıları** - Belirli ürünler için hatırlatıcılar kurun.
+- **Liste tamamlama bildirimleri** - Bir listeyi tamamladığınızda bildirim alın.
+- **Özelleştirilebilir bildirim ayarları** - Bildirimleri ne zaman ve nasıl alacağınızı kontrol edin.
 
-### 2. Home Screen
-- Overview of all shopping lists
-- Statistics dashboard showing total lists, items, and completion
-- Quick actions to create new lists
-- Archive/unarchive functionality
+### 🎨 Modern Arayüz ve Kullanıcı Deneyimi
+- **Material Design 3** - Google'ın tasarım kurallarına uygun, modern ve şık arayüz.
+- **Koyu/Açık tema desteği** - İstediğiniz temayı seçin veya sistem ayarlarını takip edin.
+- **Tüm ekran boyutlarına uyumlu** - Farklı ekran boyutlarında sorunsuz çalışır.
+- **Akıcı animasyonlar** - Keyifli bir kullanıcı deneyimi için akıcı geçişler.
 
-### 3. List Detail Screen
-- View and manage items in a specific list
-- Progress tracking with visual indicators
-- Add, edit, and remove items
-- Clear completed items functionality
+### 💾 Veri Yönetimi
+- **Yerel veri saklama** - Verileriniz Hive veritabanı kullanılarak cihazınızda güvende kalır.
+- **Çevrimdışı çalışma** - İnternet bağlantısı olmadan da çalışır.
+- **Veri yedekleme/geri yükleme** - Alışveriş listelerinizi yedekleyin ve geri yükleyin (yakında eklenecek).
 
-### 4. Add List Screen
-- Create new shopping lists with name and description
-- Quick templates for common list types
-- Form validation and user guidance
+## Ekranlar
 
-### 5. Add Item Screen
-- Add items with quantity, notes, and reminders
-- Quick add buttons for common items
-- Date/time picker for setting reminders
-- Real-time form validation
+1.  **Açılış Ekranı**
+    - Uygulamaya hoş bir animasyonlu giriş.
+    - Gerekli servisleri başlatır ve verileri yükler.
 
-### 6. Settings Screen
-- Notification preferences
-- Theme and appearance settings
-- List management options
-- Data management tools
+2.  **Ana Ekran**
+    - Tüm alışveriş listelerine genel bir bakış.
+    - Toplam liste, ürün ve tamamlanma oranını gösteren istatistikler.
+    - Hızlı yeni liste oluşturma butonları.
 
-## Technical Architecture
+3.  **Liste Detay Ekranı**
+    - Belirli bir listedeki ürünleri görüntüleme ve yönetme.
+    - Görsel ilerleme takibi.
+    - Ürün ekleme, düzenleme ve silme.
 
-### Project Structure
-```
-lib/
-├── models/           # Data models with Hive annotations
-├── providers/        # State management using Provider
-├── screens/          # UI screens
-├── services/         # Business logic and external services
-├── utils/           # Utility functions and helpers
-└── widgets/         # Reusable UI components
-```
+4.  **Liste Ekleme Ekranı**
+    - İsim ve açıklama ile yeni alışveriş listeleri oluşturma.
+    - Yaygın liste türleri için hızlı şablonlar.
 
-### Key Technologies
-- **Flutter 3.16+** - Cross-platform mobile development
-- **Material Design 3** - Modern UI design system
-- **Hive** - Lightweight NoSQL database for local storage
-- **Provider** - State management solution
-- **flutter_local_notifications** - Local notification system
-- **intl** - Internationalization and date formatting
-- **timezone** - Timezone support for notifications
+5.  **Ürün Ekleme Ekranı**
+    - Miktar, not ve hatırlatıcı ile ürün ekleme.
+    - Hatırlatıcılar için tarih/saat seçimi.
 
-### Data Models
-- **ShoppingItem** - Individual items with properties like name, quantity, notes, reminders
-- **ShoppingList** - Collections of items with metadata and completion tracking
-- **AppSettings** - User preferences and app configuration
+6.  **Ayarlar Ekranı**
+    - Bildirim, tema ve görünüm tercihleri.
+    - Liste ve veri yönetimi araçları.
 
-### Services
-- **DatabaseService** - Handles all Hive database operations
-- **NotificationService** - Manages local notifications and reminders
 
-## Getting Started
+## Demo Video
+https://github.com/user-attachments/assets/979e1cb2-70ce-4f47-b078-69f66757a77c
 
-### Prerequisites
-- Flutter SDK 3.16.0 or higher
-- Dart SDK 3.8.0 or higher
-- Android Studio / VS Code with Flutter extensions
 
-### Installation
+## Ekran Görüntüleri
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221146.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221225.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221259.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221319.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221351.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221458.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221522.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221532.png" width="200" height="400" />
+<img src="https://github.com/Dogushn/listego/blob/main/ScreenShots/Screenshot_20250728_221542.png" width="200" height="400" />
+### Proje Yapısı
+`lib/`
+`├── models/           # Veri modelleri`
+`├── providers/        # Durum yönetimi (Provider)`
+`├── screens/          # Arayüz ekranları`
+`├── services/         # Servisler ve iş mantığı`
+`├── utils/            # Yardımcı fonksiyonlar`
+`└── widgets/          # Tekrar kullanılabilir arayüz bileşenleri`
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd listego
-   ```
 
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
+### Kullanılan Teknolojiler
+- **Flutter 3.16+** - Platformlar arası mobil uygulama geliştirme.
+- **Material Design 3** - Modern arayüz tasarım sistemi.
+- **Hive** - Hafif ve hızlı bir yerel veritabanı.
+- **Provider** - Durum yönetimi çözümü.
+- **flutter_local_notifications** - Yerel bildirim sistemi.
+- **intl** - Uluslararasılaştırma ve tarih formatlama.
+- **timezone** - Bildirimler için zaman dilimi desteği.
 
-3. **Generate Hive adapters**
-   ```bash
-   flutter packages pub run build_runner build
-   ```
+### Veri Modelleri
+- **ShoppingItem** - Ad, miktar, not gibi özelliklere sahip tekil ürünler.
+- **ShoppingList** - Ürün koleksiyonları ve tamamlama durumu takibi.
+- **AppSettings** - Kullanıcı tercihleri ve uygulama ayarları.
 
-4. **Run the app**
-   ```bash
-   flutter run
-   ```
+### Servisler
+- **DatabaseService** - Tüm veritabanı işlemlerini yönetir.
+- **NotificationService** - Yerel bildirimleri ve hatırlatıcıları yönetir.
 
-### Building for Production
+## Başlarken (Geliştiriciler İçin)
 
-**Android APK:**
-```bash
-flutter build apk --release
-```
+### Gereksinimler
+- Flutter SDK 3.16.0 veya üstü
+- Dart SDK 3.8.0 veya üstü
 
-**iOS IPA:**
-```bash
-flutter build ios --release
-```
+### Kurulum
 
-## Development
+1.  **Projeyi klonlayın**
+    ```bash
+    git clone <repository-url>
+    cd listego
+    ```
 
-### Code Generation
-The app uses Hive for data persistence, which requires code generation. After making changes to model classes, run:
+2.  **Bağımlılıkları yükleyin**
+    ```bash
+    flutter pub get
+    ```
+
+3.  **Hive adaptörlerini oluşturun**
+    ```bash
+    flutter packages pub run build_runner build
+    ```
+
+4.  **Uygulamayı çalıştırın**
+    ```bash
+    flutter run
+    ```
+
+## Geliştirme
+
+Veri modellerinde bir değişiklik yaptığınızda, Hive'ın kodlarını yeniden oluşturmak için şu komutu çalıştırın:
 ```bash
 flutter packages pub run build_runner build
 ```
 
-### Testing
-```bash
-flutter test
-```
+## İletişim
+- Proje bağlantısı: https://github.com/Dogushn/listego.git
+- İstinye Üniversitesi: https://www.istinye.edu.tr/
 
-### Code Analysis
-```bash
-flutter analyze
-```
-
-## Features in Development
-
-- [ ] Data export/import functionality
-- [ ] Cloud sync capabilities
-- [ ] Shopping list sharing
-- [ ] Barcode scanning for items
-- [ ] Voice input for adding items
-- [ ] Shopping history and analytics
-- [ ] Multiple language support
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Flutter team for the amazing framework
-- Hive team for the lightweight database solution
-- Material Design team for the design system
-- All contributors and users of the app
-
----
-
-**ListeGo** - Making shopping lists smart and beautiful! 🛒✨
