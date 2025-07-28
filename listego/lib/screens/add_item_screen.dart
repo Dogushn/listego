@@ -9,8 +9,13 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 
 class AddItemScreen extends StatefulWidget {
   final ShoppingList list;
+  final ShoppingItem? itemToEdit; // Optional item to edit
 
-  const AddItemScreen({super.key, required this.list});
+  const AddItemScreen({
+    super.key, 
+    required this.list,
+    this.itemToEdit, // Pass null for adding new items
+  });
 
   @override
   State<AddItemScreen> createState() => _AddItemScreenState();
@@ -28,6 +33,29 @@ class _AddItemScreenState extends State<AddItemScreen> {
   bool _enableReminder = false;
 
   @override
+  void initState() {
+    super.initState();
+    // If editing an item, populate the form with existing data
+    if (widget.itemToEdit != null) {
+      _nameController.text = widget.itemToEdit!.name;
+      _notesController.text = widget.itemToEdit!.notes ?? '';
+      _quantity = widget.itemToEdit!.quantity;
+      _enableReminder = widget.itemToEdit!.reminderDate != null;
+      if (_enableReminder && widget.itemToEdit!.reminderDate != null) {
+        _reminderDate = DateTime(
+          widget.itemToEdit!.reminderDate!.year,
+          widget.itemToEdit!.reminderDate!.month,
+          widget.itemToEdit!.reminderDate!.day,
+        );
+        _reminderTime = TimeOfDay(
+          hour: widget.itemToEdit!.reminderDate!.hour,
+          minute: widget.itemToEdit!.reminderDate!.minute,
+        );
+      }
+    }
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _notesController.dispose();
@@ -37,34 +65,91 @@ class _AddItemScreenState extends State<AddItemScreen> {
   Future<void> _saveItem() async {
     if (!_formKey.currentState!.validate()) return;
 
+    final itemName = _nameController.text.trim();
+    
+    // Check if item already exists in the list (only for new items, not when editing)
+    if (widget.itemToEdit == null && widget.list.hasItemWithName(itemName)) {
+      // Show confirmation dialog
+      final shouldAdd = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Item Already Exists'),
+            content: Text(
+              '"$itemName" is already in your list. Do you still want to add it?',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: const Text('Yes'),
+              ),
+            ],
+          );
+        },
+      );
+
+      // If user cancels, don't add the item
+      if (shouldAdd != true) {
+        return;
+      }
+    }
+
     setState(() {
       _isLoading = true;
     });
 
     try {
-      // Create the new item
-      final newItem = ShoppingItem.create(
-        name: _nameController.text.trim(),
-        quantity: _quantity,
-        notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
-        reminderDate: _enableReminder && _reminderDate != null && _reminderTime != null
-            ? DateTime(
-                _reminderDate!.year,
-                _reminderDate!.month,
-                _reminderDate!.day,
-                _reminderTime!.hour,
-                _reminderTime!.minute,
-              )
-            : null,
-      );
-
-      // Save to database
-      await StorageService.instance.addItemToList(widget.list.id, newItem);
+      ShoppingItem itemToSave;
+      
+      if (widget.itemToEdit != null) {
+        // Update existing item
+        itemToSave = widget.itemToEdit!.copyWith(
+          name: itemName,
+          quantity: _quantity,
+          notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
+          reminderDate: _enableReminder && _reminderDate != null && _reminderTime != null
+              ? DateTime(
+                  _reminderDate!.year,
+                  _reminderDate!.month,
+                  _reminderDate!.day,
+                  _reminderTime!.hour,
+                  _reminderTime!.minute,
+                )
+              : null,
+          updatedAt: DateTime.now(),
+        );
+        
+        // Update in database
+        await StorageService.instance.updateItemInList(widget.list.id, itemToSave);
+      } else {
+        // Create new item
+        itemToSave = ShoppingItem.create(
+          name: itemName,
+          quantity: _quantity,
+          notes: _notesController.text.trim().isEmpty ? null : _notesController.text.trim(),
+          reminderDate: _enableReminder && _reminderDate != null && _reminderTime != null
+              ? DateTime(
+                  _reminderDate!.year,
+                  _reminderDate!.month,
+                  _reminderDate!.day,
+                  _reminderTime!.hour,
+                  _reminderTime!.minute,
+                )
+              : null,
+        );
+        
+        // Save to database
+        await StorageService.instance.addItemToList(widget.list.id, itemToSave);
+      }
 
       // Schedule notification if reminder is set
-      if (_enableReminder && newItem.reminderDate != null) {
+      if (_enableReminder && itemToSave.reminderDate != null) {
         try {
-          await NotificationService.instance.scheduleItemReminder(newItem, widget.list);
+          await NotificationService.instance.scheduleItemReminder(itemToSave, widget.list);
         } catch (e) {
           // Don't fail the save if notification fails
           print('Failed to schedule notification: $e');
@@ -75,14 +160,16 @@ class _AddItemScreenState extends State<AddItemScreen> {
         Navigator.pop(context);
         Helpers.showSnackBar(
           context,
-          'Added "${newItem.name}" to your list!',
+          widget.itemToEdit != null 
+              ? 'Updated "${itemToSave.name}" successfully!'
+              : 'Added "${itemToSave.name}" to your list!',
         );
       }
     } catch (e) {
       if (mounted) {
         Helpers.showSnackBar(
           context,
-          'Error adding item: $e',
+          'Error ${widget.itemToEdit != null ? 'updating' : 'adding'} item: $e',
           isError: true,
         );
       }
@@ -159,7 +246,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text('Add Item'),
+        title: Text(widget.itemToEdit != null ? 'Edit Item' : 'Add Item'),
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         actions: [
@@ -440,7 +527,9 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 child: CircularProgressIndicator(strokeWidth: 2),
               )
             : const Icon(Icons.save),
-        label: Text(_isLoading ? 'Saving...' : 'Save Item'),
+        label: Text(_isLoading 
+            ? 'Saving...' 
+            : (widget.itemToEdit != null ? 'Update Item' : 'Save Item')),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         foregroundColor: Theme.of(context).colorScheme.onPrimaryContainer,
       ),

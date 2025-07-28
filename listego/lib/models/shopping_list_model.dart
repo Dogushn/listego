@@ -105,6 +105,22 @@ class ShoppingList extends HiveObject {
     updatedAt = DateTime.now();
   }
 
+  // Check if an item with the same name already exists in the list
+  bool hasItemWithName(String itemName) {
+    return items.any((item) => 
+        item.name.toLowerCase().trim() == itemName.toLowerCase().trim());
+  }
+
+  // Get existing item with the same name
+  ShoppingItem? getItemWithName(String itemName) {
+    try {
+      return items.firstWhere((item) => 
+          item.name.toLowerCase().trim() == itemName.toLowerCase().trim());
+    } catch (e) {
+      return null;
+    }
+  }
+
   // JSON serialization for data export/import
   Map<String, dynamic> toJson() {
     return {

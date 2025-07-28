@@ -62,6 +62,20 @@ class _ItemListScreenState extends State<ItemListScreen> {
     }
   }
 
+  void _navigateToEditItem(ShoppingItem item) {
+    if (_currentList != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddItemScreen(
+            list: _currentList!,
+            itemToEdit: item,
+          ),
+        ),
+      ).then((_) => _loadList()); // Refresh when returning
+    }
+  }
+
   Future<void> _toggleItemCompletion(String itemId) async {
     if (_currentList != null) {
       try {
@@ -291,10 +305,7 @@ class _ItemListScreenState extends State<ItemListScreen> {
                           item: item,
                           onToggleCompletion: () => _toggleItemCompletion(item.id),
                           onDelete: () => _deleteItem(item.id),
-                          onEdit: () {
-                            // TODO: Navigate to edit item screen
-                            Helpers.showSnackBar(context, 'Edit functionality coming soon!');
-                          },
+                          onEdit: () => _navigateToEditItem(item),
                         );
                       },
                     ),
